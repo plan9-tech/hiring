@@ -17,6 +17,8 @@
  * @author https://plan9.tech
  */
 import { before, describe, test } from "node:test";
+import assert from "node:assert";
+import fs from 'fs';
 import {
 	Request,
 	Response,
@@ -24,13 +26,16 @@ import {
 	http,
 	listener,
 } from "./aggregateDocs.lib.mjs";
-import { log } from "../lib.mjs";
+
 import { aggregateDocs } from "./aggregateDocs.mjs";
 //
 const server = http.createServer(listener);
 describe("http server test", () => {
 	test("this should be tested", async () => {
 		const res = await fetch("http://localhost:3000");
-		aggregateDocs(await fetch.json());
+		await aggregateDocs(await res.json());
+
+		const data = JSON.parse(fs.readFileSync('aggregates.json'));
+		assert.equal(data.John, 100000);
 	});
 });
