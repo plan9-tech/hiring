@@ -6,6 +6,7 @@
  * @author https://plan9.tech
  */
 import { test } from "node:test";
+import assert from "node:assert";
 import { suite } from "../lib.mjs";
 import { queue } from "./queue.mjs";
 import { getRandomInt } from "../lib.mjs";
@@ -34,5 +35,7 @@ const stack = [
 	},
 ];
 suite("queue", async () => {
-	test("JSON.stringify(await queue(stack)) === JSON.stringify([1, 2, 3])");
+	test("JSON.stringify(await queue(stack)) === JSON.stringify([1, 2, 3])", async (t) => {
+		assert(JSON.stringify(await queue(stack)) === JSON.stringify([1, 2, 3]))
+	});
 });
